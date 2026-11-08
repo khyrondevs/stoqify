@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 25% 97%;       /* #faf9f6 warm-50 */
+    --foreground: 222 47% 11%;      /* #0f172a slate-900 */
+
+    --card: 0 0% 100%;              /* #ffffff crisp white cards */
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 224 76% 48%;          /* #1d4ed8 cobalt-600 */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 40 18% 95%;        /* #f5f4ef warm-100 */
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 40 14% 92%;            /* #eae8df warm-200 */
+    --muted-foreground: 215 16% 47%; /* #64748b slate-500 */
+
+    --accent: 173 80% 32%;          /* #0d9488 teal-600 */
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 40 14% 90%;           /* warm-200 subtle divider */
+    --input: 40 14% 86%;
+    --ring: 224 76% 48%;
+
+    --radius: 0.5rem;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #faf9f6;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Custom scrollbars for high desktop density */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d7d4c8;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a394;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
