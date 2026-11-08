@@ -1,0 +1,59 @@
+name: Windows x64 NSIS Installer
+
+on:
+  push:
+    branches:
+      - feat/windows-installer-branding
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-installer:
+    name: Package Windows x64 NSIS Installer
+    runs-on: windows-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12.17.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Set up Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-pc-windows-msvc
+
+      - name: Set up Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri -> target
+
+      - name: Install dependencies (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+
+      - name: Run automated test suite
+        run: pnpm test
+
+      - name: Build frontend application
+        run: pnpm run build
+
+      - name: Package Windows NSIS Installer
+        run: pnpm exec tauri build --target x86_64-pc-windows-msvc --bundles nsis
+
+      - name: Upload NSIS Installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: stoqify-v0.1.0-windows-x64-nsis-installer
+          path: src-tauri/target/x86_64-pc-windows-msvc/release/bundle/nsis/*.exe
+          if-no-files-found: error
+          retention-days: 14
